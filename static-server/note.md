@@ -31,3 +31,5 @@ Url {
 2、为所有请求，响应时返回Last-Modified
 3、为带if-modified-since的请求头，做日期检查，如果没有修改，返回304,若修改返回文件
 
+浏览器在发送请求之前由于检测到Cache-Control和Expires。由于有些浏览器不支持Cache-Control，才会采用expires。如果没有过期，则不会发送请求，直接从缓存中读取文件
+
