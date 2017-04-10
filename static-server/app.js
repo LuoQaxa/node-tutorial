@@ -3,6 +3,7 @@ var path = require('path')
 var url = require('url')
 var fs = require('fs')
 var mime = require('./mime').types
+var config = require('./config')
 
 // creat http server,listen prot 4000
 var PROT = 4000
@@ -15,6 +16,12 @@ var server = http.createServer(function(req,res) {
 	var ext = path.extname(realPath)
 	//if ext is '' ,we can treat is as unkown
 	ext = ext ? ext.slice(1) : 'unkown'
+	if (ext.match(config.Expires.fileMatch)) {
+		var expires = new Date()
+		expires.setTime(expires.getTime() + config.Expires.maxAge * 1000)
+		res.setHeader("Expires", expires.toUTCString());
+		res.setHeader("Cache-Control","max-age=" + config.Expires.maxAge)
+	}
 	// read file and send back to browser
 	// before read file you should make sure file exist
 	fs.exists(realPath,function(exists){
