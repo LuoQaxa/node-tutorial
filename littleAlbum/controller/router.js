@@ -1,13 +1,14 @@
 /**
  * Created by Danny on 2015/9/22 15:30.
  */
+ // mvc思想，将数据相关的放在models文件夹中
 var file = require("../models/file.js");
 var formidable = require('formidable');
 var path = require("path");
 var fs = require("fs");
 var sd = require("silly-datetime");
 
-//首页
+//首页,首页是读取所有的文件夹数组
 exports.showIndex = function(req,res,next){
     //错误的：传统思维，不是node的思维：
     //res.render("index",{
@@ -30,10 +31,12 @@ exports.showIndex = function(req,res,next){
 }
 
 //相册页
+//当点击每个文件夹 获取该文件夹下拥有的所有图片
 exports.showAlbum = function(req,res,next){
     //遍历相册中的所有图片
     var albumName = req.params.albumName;
     //具体业务交给model
+    //函数的形式也参照node.js的形式第一个参数是传入函数的参数，第二个参数是回调函数
     file.getAllImagesByAlbumName(albumName,function(err,imagesArray){
         if(err){
             next(); //交给下面的中间件

@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 //控制器
+//由于controller文件夹中有package.json，所以当找不到index.js时就会去读package.json文件 main字段的值route,js
 var router = require("./controller");
 
 //设置模板引擎
